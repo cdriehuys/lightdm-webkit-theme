@@ -39,3 +39,10 @@
   font-size: 1.25rem;
   margin-bottom: 0.5em;
 }
+
+/* Best guess for HiDPI. */
+@media screen and (min-width: 3000px) and (min-height: 1200px) {
+  html {
+    zoom: 2;
+  }
+}
