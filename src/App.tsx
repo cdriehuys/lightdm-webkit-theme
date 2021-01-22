@@ -19,21 +19,27 @@ const App: React.FC<Props> = ({ initialLightDM }) => {
 
   return (
     <HashRouter>
-      <Background source="some/dummy/image">
-        <Route exact path="/">
-          <SplashScreen>
-            <Clock />
-          </SplashScreen>
-        </Route>
-        <Route path="/greeter">
-          <Greeter
-            currentPassword={lightDM.password}
-            isSubmitting={lightDM.isAuthenticating}
-            onLogIn={handleLogIn}
-            onPasswordChange={lightDM.setPassword}
+      <Route
+        render={({ location }) => (
+          <Background
+            blur={location.pathname !== "/"}
+            source="some/dummy/image"
           />
-        </Route>
-      </Background>
+        )}
+      />
+      <Route exact path="/">
+        <SplashScreen>
+          <Clock />
+        </SplashScreen>
+      </Route>
+      <Route path="/greeter">
+        <Greeter
+          currentPassword={lightDM.password}
+          isSubmitting={lightDM.isAuthenticating}
+          onLogIn={handleLogIn}
+          onPasswordChange={lightDM.setPassword}
+        />
+      </Route>
     </HashRouter>
   );
 };

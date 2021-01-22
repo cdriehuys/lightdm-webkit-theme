@@ -36,16 +36,7 @@ const Greeter: React.FC<Props> = ({
   });
 
   return (
-    <div
-      style={{
-        backdropFilter: "blur(10px)",
-        display: "flex",
-        flexDirection: "column",
-        height: "100%",
-        justifyContent: "center",
-        width: "100%",
-      }}
-    >
+    <div className="greeter">
       <LogInForm
         currentPassword={currentPassword}
         isSubmitting={isSubmitting}
