@@ -43,7 +43,8 @@ const Clock = () => {
         fontFamily: "Lato",
         left: "4rem",
         position: "absolute",
-        textShadow: "1px 2px 2px rgba(0, 0, 0, .5)",
+        textShadow:
+          "1px 2px 2px rgba(0, 0, 0, .5), 0px -1px 5px rgba(0, 0, 0, .1)",
       }}
     >
       <h1 style={{ fontSize: "8rem" }}>{formatTime(time)}</h1>
