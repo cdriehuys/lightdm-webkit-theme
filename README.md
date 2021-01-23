@@ -2,6 +2,10 @@
 
 My custom theme for lightdm-webkit2-greeter.
 
+![Splash screen](./screenshots/splash-screen.jpg)
+![Log in screen](./screenshots/login.jpg)
+![User list](./screenshots/users.jpg)
+
 ## Usage
 
 ### Prerequisites
