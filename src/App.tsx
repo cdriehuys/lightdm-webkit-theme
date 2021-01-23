@@ -4,6 +4,7 @@ import Background from "./Background";
 import Clock from "./Clock";
 import Greeter from "./Greeter";
 import SplashScreen from "./SplashScreen";
+import { selectBackground } from "./theme";
 import useLightDM from "./useLightDM";
 
 interface Props {
@@ -12,15 +13,15 @@ interface Props {
 
 const App: React.FC<Props> = ({ initialLightDM }) => {
   const lightDM = useLightDM(initialLightDM);
+  const [background, setBackground] = useState("");
+
+  useEffect(() => setBackground(selectBackground()), []);
 
   return (
     <HashRouter>
       <Route
         render={({ location }) => (
-          <Background
-            blur={location.pathname !== "/"}
-            source="some/dummy/image"
-          />
+          <Background blur={location.pathname !== "/"} source={background} />
         )}
       />
       <Route exact path="/">

@@ -5,5 +5,8 @@ interface Window {
   show_message(text: string, type: "error" | "info"): void;
   show_prompt(text: string, type: "text" | "password"): void;
 
+  // Objects provided by lightdm-webkit-greeter
+  config: LightDMConfig;
+  greeterutil: LightDMUtil;
   lightdm: LightDM;
 }

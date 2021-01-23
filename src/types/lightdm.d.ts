@@ -51,3 +51,26 @@ interface LightDM {
   restart(): void;
   shutdown(): void;
 }
+
+interface LightDMConfig {
+  /**
+   * Get a string config value.
+   *
+   * @param section The section containing the key to look up.
+   * @param key The key of the value to retrieve.
+   * @returns The string value of the config property.
+   */
+  get_str(section: string, key: string): string;
+}
+
+interface LightDMUtil {
+  /**
+   * List the contents of the given path.
+   *
+   * @param path The directory to search in.
+   *
+   * @returns An array containing the paths present in the provided directory,
+   *          or `null` if the path doesn't exist.
+   */
+  dirlist(path: string): null | string[];
+}

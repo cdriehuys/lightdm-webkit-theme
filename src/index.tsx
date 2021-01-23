@@ -7,6 +7,14 @@ import "./main.css";
 if (window.lightdm === undefined) {
   const DEBUG_PASSWORD = "password";
 
+  window.config = {
+    get_str: () => "",
+  };
+
+  window.greeterutil = {
+    dirlist: () => [],
+  };
+
   window.lightdm = {
     authentication_user: null,
     autologin_guest: false,
