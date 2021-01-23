@@ -23,7 +23,7 @@ interface LightDM {
   can_restart: boolean;
   can_shutdown: boolean;
   can_suspend: boolean;
-  default_session: string;
+  default_session: null | string;
   has_guest_account: boolean;
   hide_users: boolean;
   hostname: string;
@@ -34,7 +34,7 @@ interface LightDM {
   layouts: object[];
   num_users: number;
   select_guest: boolean;
-  select_user: string;
+  select_user: null | string;
   sessions: LightDMSession[];
   users: LightDMUser[];
 

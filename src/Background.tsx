@@ -17,7 +17,7 @@ const Background: React.FC<Props> = ({ blur, source }) => (
       height: "100vh",
       margin: 0,
       position: "absolute",
-      transition: "filter .5s ease-in",
+      transition: "filter .25s ease-out",
       width: "100vw",
       zIndex: -1,
     }}

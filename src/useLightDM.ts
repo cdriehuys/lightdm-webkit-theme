@@ -1,22 +1,38 @@
 import { useCallback, useEffect, useState } from "react";
 
+const findDefaultUser = (lightDM: LightDM): null | LightDMUser => {
+  const defaultUsername = lightDM.select_user;
+  if (!defaultUsername) {
+    return null;
+  }
+
+  const user = lightDM.users.find((u) => u.username === defaultUsername);
+  if (!user) {
+    return null;
+  }
+
+  return user;
+};
+
 const useLightDM = (initialLightDM: LightDM) => {
   const [isAuthenticating, setAuthenticating] = useState(
     initialLightDM.in_authentication
   );
   const [password, setPassword] = useState("");
+  const [user, setUser] = useState(findDefaultUser(initialLightDM));
+  const [users, setUsers] = useState(initialLightDM.users);
 
   const refreshFromLightDM = useCallback(() => {
     setAuthenticating(window.lightdm.in_authentication);
+    setUsers(window.lightdm.users);
   }, [setAuthenticating]);
 
-  const authenticate = useCallback(
-    (username: string) => {
-      window.lightdm.authenticate(username);
+  const authenticate = useCallback(() => {
+    if (user !== null) {
+      window.lightdm.authenticate(user.username);
       refreshFromLightDM();
-    },
-    [refreshFromLightDM]
-  );
+    }
+  }, [refreshFromLightDM, user]);
 
   const cancelAuthentication = useCallback(() => {
     window.lightdm.cancel_authentication();
@@ -87,6 +103,9 @@ const useLightDM = (initialLightDM: LightDM) => {
     isAuthenticating,
     password,
     setPassword,
+    setUser,
+    user,
+    users,
   };
 };
 

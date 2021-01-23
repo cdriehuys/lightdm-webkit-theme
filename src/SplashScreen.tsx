@@ -7,7 +7,7 @@ const SplashScreen: React.FC = ({ children }) => {
   const handleClick = useCallback(
     (e: MouseEvent) => {
       if (e.button === 0) {
-        history.push("/greeter");
+        history.push("/greeter/log-in");
       }
     },
     [history]
@@ -17,7 +17,7 @@ const SplashScreen: React.FC = ({ children }) => {
     (e: KeyboardEvent) => {
       if (e.code === "Enter" || e.code === "Space") {
         e.preventDefault();
-        history.push("/greeter");
+        history.push("/greeter/log-in");
       }
     },
     [history]

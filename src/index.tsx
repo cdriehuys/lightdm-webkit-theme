@@ -16,7 +16,7 @@ if (window.lightdm === undefined) {
     can_restart: true,
     can_shutdown: true,
     can_suspend: true,
-    default_session: "i3",
+    default_session: null,
     has_guest_account: true,
     hide_users: false,
     hostname: "somewhere-in-the-cloud",

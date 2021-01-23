@@ -1,6 +1,6 @@
 import { faArrowRight, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 
 interface Props {
   currentPassword: string;
@@ -29,47 +29,36 @@ const LogInForm: React.FC<Props> = ({
     [onSubmit]
   );
 
+  // Clear the password input when the form unmounts.
+  useEffect(() => {
+    return () => onPasswordChange("");
+  }, []);
+
   return (
-    <div
-      style={{
-        background: "rgba(0, 0, 0, .5)",
-        color: "#efefef",
-        fontFamily: "Lato",
-        marginLeft: "auto",
-        marginRight: "auto",
-        maxWidth: "30rem",
-        padding: "4rem",
-      }}
-    >
-      <form onSubmit={handleSubmit}>
-        <label className="password-label" htmlFor="password">
-          Password
-        </label>
-        <div className="password">
-          <input
-            autoFocus={true}
-            className="password-input"
-            disabled={isSubmitting}
-            id="password"
-            name="password"
-            onChange={handlePasswordChange}
-            type="password"
-            value={currentPassword}
-          />
-          <button
-            className="log-in-button"
-            disabled={isSubmitting}
-            type="submit"
-          >
-            {isSubmitting ? (
-              <FontAwesomeIcon icon={faSpinner} size="2x" spin={true} />
-            ) : (
-              <FontAwesomeIcon icon={faArrowRight} size="2x" />
-            )}
-          </button>
-        </div>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <label className="password-label" htmlFor="password">
+        Password
+      </label>
+      <div className="password">
+        <input
+          autoFocus={true}
+          className="password-input"
+          disabled={isSubmitting}
+          id="password"
+          name="password"
+          onChange={handlePasswordChange}
+          type="password"
+          value={currentPassword}
+        />
+        <button className="log-in-button" disabled={isSubmitting} type="submit">
+          {isSubmitting ? (
+            <FontAwesomeIcon icon={faSpinner} size="2x" spin={true} />
+          ) : (
+            <FontAwesomeIcon icon={faArrowRight} size="2x" />
+          )}
+        </button>
+      </div>
+    </form>
   );
 };
 

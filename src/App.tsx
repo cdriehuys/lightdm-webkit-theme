@@ -13,10 +13,6 @@ interface Props {
 const App: React.FC<Props> = ({ initialLightDM }) => {
   const lightDM = useLightDM(initialLightDM);
 
-  const handleLogIn = useCallback(() => {
-    lightDM.authenticate("chathan");
-  }, [lightDM]);
-
   return (
     <HashRouter>
       <Route
@@ -36,8 +32,11 @@ const App: React.FC<Props> = ({ initialLightDM }) => {
         <Greeter
           currentPassword={lightDM.password}
           isSubmitting={lightDM.isAuthenticating}
-          onLogIn={handleLogIn}
+          onLogIn={lightDM.authenticate}
           onPasswordChange={lightDM.setPassword}
+          onUserSelect={lightDM.setUser}
+          user={lightDM.user}
+          users={lightDM.users}
         />
       </Route>
     </HashRouter>

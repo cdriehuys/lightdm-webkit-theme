@@ -1,12 +1,17 @@
 import React, { useCallback, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { Redirect, Route, useHistory, useRouteMatch } from "react-router-dom";
 import LogInForm from "./LogInForm";
+import UserDisplay from "./UserDisplay";
+import UserList from "./UserList";
 
 interface Props {
   currentPassword: string;
   isSubmitting: boolean;
   onLogIn: () => void;
   onPasswordChange: (newPassword: string) => void;
+  onUserSelect: (user: LightDMUser) => void;
+  user: null | LightDMUser;
+  users: LightDMUser[];
 }
 
 const Greeter: React.FC<Props> = ({
@@ -14,8 +19,12 @@ const Greeter: React.FC<Props> = ({
   isSubmitting,
   onPasswordChange,
   onLogIn,
+  onUserSelect,
+  user,
+  users,
 }) => {
   const history = useHistory();
+  const match = useRouteMatch();
 
   const handleKeydown = useCallback(
     (e: KeyboardEvent) => {
@@ -27,6 +36,10 @@ const Greeter: React.FC<Props> = ({
     [history]
   );
 
+  const handleOpenUsers = useCallback(() => {
+    history.push(`${match.path}/users`);
+  }, [history]);
+
   useEffect(() => {
     document.addEventListener("keydown", handleKeydown);
 
@@ -37,12 +50,28 @@ const Greeter: React.FC<Props> = ({
 
   return (
     <div className="greeter">
-      <LogInForm
-        currentPassword={currentPassword}
-        isSubmitting={isSubmitting}
-        onPasswordChange={onPasswordChange}
-        onSubmit={onLogIn}
-      />
+      <div className="greeter__content">
+        <Route path={`${match.path}/log-in`}>
+          {user === null ? (
+            <Redirect to={`${match.url}/users`} />
+          ) : (
+            <React.Fragment>
+              <div style={{ marginBottom: "1em", marginRight: "auto" }}>
+                <UserDisplay onSelect={handleOpenUsers} user={user} />
+              </div>
+              <LogInForm
+                currentPassword={currentPassword}
+                isSubmitting={isSubmitting}
+                onPasswordChange={onPasswordChange}
+                onSubmit={onLogIn}
+              />
+            </React.Fragment>
+          )}
+        </Route>
+        <Route path={`${match.path}/users`}>
+          <UserList setUser={onUserSelect} user={user} users={users} />
+        </Route>
+      </div>
     </div>
   );
 };
