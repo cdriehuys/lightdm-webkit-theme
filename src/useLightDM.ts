@@ -1,12 +1,22 @@
 import { useCallback, useEffect, useState } from "react";
 
+const localStorageUserKey = "lastSelectedUser";
+
 const findDefaultUser = (lightDM: LightDM): null | LightDMUser => {
-  const defaultUsername = lightDM.select_user;
+  const { select_user, users } = lightDM;
+  if (users.length === 1) {
+    return users[0];
+  }
+
+  // Use the default username as decided by LightDM or the most recently
+  // selected user, with LightDM having precedence.
+  let defaultUsername =
+    select_user || localStorage.getItem(localStorageUserKey);
   if (!defaultUsername) {
     return null;
   }
 
-  const user = lightDM.users.find((u) => u.username === defaultUsername);
+  const user = users.find((u) => u.username === defaultUsername);
   if (!user) {
     return null;
   }
@@ -19,7 +29,7 @@ const useLightDM = (initialLightDM: LightDM) => {
     initialLightDM.in_authentication
   );
   const [password, setPassword] = useState("");
-  const [user, setUser] = useState(findDefaultUser(initialLightDM));
+  const [user, setStateUser] = useState(findDefaultUser(initialLightDM));
   const [users, setUsers] = useState(initialLightDM.users);
 
   const refreshFromLightDM = useCallback(() => {
@@ -45,6 +55,14 @@ const useLightDM = (initialLightDM: LightDM) => {
       refreshFromLightDM();
     },
     [refreshFromLightDM]
+  );
+
+  const setUser = useCallback(
+    (user: LightDMUser) => {
+      localStorage.setItem(localStorageUserKey, user.username);
+      setStateUser(user);
+    },
+    [setStateUser]
   );
 
   useEffect(() => {
